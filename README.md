@@ -1,5 +1,4 @@
 <img src="assets/dauphine_master_logo.png" width="480">
-<br>
 
 # Usage
 
