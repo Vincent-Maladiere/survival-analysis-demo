@@ -1,29 +1,12 @@
-# JupyterLite Demo
+<img src="assets/dauphine_master_logo.png" width="480">
+<br><br>
 
-[![lite-badge](https://jupyterlite.rtfd.io/en/latest/_static/badge.svg)](https://jupyterlite.github.io/demo)
+# Usage
 
-JupyterLite deployed as a static site to GitHub Pages, for demo purposes.
+Access the JupyterLite workspace by clicking the button: [![lite-badge](https://jupyterlite.rtfd.io/en/latest/_static/badge.svg)](https://vincent-maladiere.github.io/survival-analysis-demo)
 
-## ✨ Try it in your browser ✨
+This will open a copy of the project on your browser; feel free to run and edit it.
 
-➡️ **https://jupyterlite.github.io/demo**
+# What
 
-![github-pages](https://user-images.githubusercontent.com/591645/120649478-18258400-c47d-11eb-80e5-185e52ff2702.gif)
-
-## Requirements
-
-JupyterLite is being tested against modern web browsers:
-
-- Firefox 90+
-- Chromium 89+
-
-## Deploy your JupyterLite website on GitHub Pages
-
-Check out the guide on the JupyterLite documentation: https://jupyterlite.readthedocs.io/en/latest/quickstart/deploy.html
-
-## Further Information and Updates
-
-For more info, keep an eye on the JupyterLite documentation:
-
-- How-to Guides: https://jupyterlite.readthedocs.io/en/latest/howto/index.html
-- Reference: https://jupyterlite.readthedocs.io/en/latest/reference/index.html
+This repository contains the material used during the censored data workshops, given during [Dauphine Executive Master of Statistic & Big Data](https://executive-education.dauphine.psl.eu/formations/executive-master-diplome-universite/statistique-big-data) in 2023 by Vincent Maladière.
