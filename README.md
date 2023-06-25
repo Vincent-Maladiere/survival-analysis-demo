@@ -1,4 +1,4 @@
-<img src="assets/dauphine_master_logo.png" width="480">
+<img src="content/assets/dauphine_master_logo.png" width="480">
 
 # Usage
 
