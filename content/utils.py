@@ -6,10 +6,13 @@ import pandas as pd
 from matplotlib import pyplot as plt
 
 from lifelines.metrics import concordance_index
+from sklearn.utils.validation import check_is_fitted
+from sklearn.base import BaseEstimator
 
 from hazardous.metrics.brier_score import (
     brier_score, integrated_brier_score
 )
+from hazardous.utils import check_y_survival
 
 
 def show_progress(block_num, block_size, total_size):
@@ -115,3 +118,45 @@ class SurvivalAnalysisEvaluator:
         self.add_model(model_name, survival_curves)
         self.plot(model_names=model_names)
         return self.metrics_table()
+    
+
+class LifelinesWrapper(BaseEstimator):
+
+    def __init__(self, estimator):
+        self.estimator = estimator
+
+    def fit(self, X, y, **kwargs):
+        event, duration = check_y_survival(y)
+
+        X_copy = X.copy()
+        if not isinstance(X, pd.DataFrame):
+            X_copy = pd.DataFrame(X_copy)
+        
+        X_copy["event"] = event
+        X_copy["duration"] = duration
+
+        self.estimator.fit(
+            X_copy,
+            duration_col="duration",
+            event_col="event",
+            **kwargs,
+        )
+
+        feature_weights = self.estimator.params_
+        self.feature_names_in_ = feature_weights.index
+        self.coef_ = feature_weights.values
+
+        return self
+    
+    def predict_survival_function(self, X, times=None):
+        check_is_fitted(self, "coef_")
+        survival_probas = self.estimator.predict_survival_function(X, times=times)
+        return survival_probas.T.values
+    
+    def predict_cumulative_hazard(self, X, times=None):
+        check_is_fitted(self, "coef_")
+        cumulative_hazards = self.estimator.predict_cumulative_hazard(X, times=times)
+        return cumulative_hazards.T.values
+    
+    def __repr__(self):
+        return repr(self.estimator)
