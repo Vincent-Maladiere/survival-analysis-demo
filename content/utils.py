@@ -8,6 +8,8 @@ from matplotlib import pyplot as plt
 from lifelines.metrics import concordance_index
 from sklearn.utils.validation import check_is_fitted
 from sklearn.base import BaseEstimator
+from sklearn.pipeline import Pipeline, _final_estimator_has
+from sklearn.utils.metaestimators import available_if
 
 from hazardous.metrics.brier_score import (
     brier_score, integrated_brier_score
@@ -76,7 +78,7 @@ class SurvivalAnalysisEvaluator:
         c_index = concordance_index(
             event_times=self.y_test["duration"],
             event_observed=self.y_test["event"],
-            predicted_scores=survival_to_risk_estimate(survival_curves),
+            predicted_scores=-survival_to_risk_estimate(survival_curves),
         )
         self.model_data[model_name] = {
             "brier_scores": brier_scores,
@@ -160,3 +162,71 @@ class LifelinesWrapper(BaseEstimator):
     
     def __repr__(self):
         return repr(self.estimator)
+
+
+@available_if(_final_estimator_has("predict_cumulative_hazard_function"))
+def predict_cumulative_hazard_function(self, X, **kwargs):
+    """Predict cumulative hazard function.
+
+    The cumulative hazard function for an individual
+    with feature vector :math:`x` is defined as
+
+    .. math::
+
+        H(t \\mid x) = \\exp(x^\\top \\beta) H_0(t) ,
+
+    where :math:`H_0(t)` is the baseline hazard function,
+    estimated by Breslow's estimator.
+
+    Parameters
+    ----------
+    X : array-like, shape = (n_samples, n_features)
+        Data matrix.
+
+    Returns
+    -------
+    cum_hazard : ndarray, shape = (n_samples,)
+        Predicted cumulative hazard functions.
+    """
+    Xt = X
+    for _, _, transform in self._iter(with_final=False):
+        Xt = transform.transform(Xt)
+    return self.steps[-1][-1].predict_cumulative_hazard_function(Xt, **kwargs)
+
+
+@available_if(_final_estimator_has("predict_survival_function"))
+def predict_survival_function(self, X, **kwargs):
+    """Predict survival function.
+
+    The survival function for an individual
+    with feature vector :math:`x` is defined as
+
+    .. math::
+
+        S(t \\mid x) = S_0(t)^{\\exp(x^\\top \\beta)} ,
+
+    where :math:`S_0(t)` is the baseline survival function,
+    estimated by Breslow's estimator.
+
+    Parameters
+    ----------
+    X : array-like, shape = (n_samples, n_features)
+        Data matrix.
+
+    Returns
+    -------
+    survival : ndarray, shape = (n_samples,)
+        Predicted survival functions.
+    """
+    Xt = X
+    for _, _, transform in self._iter(with_final=False):
+        Xt = transform.transform(Xt)
+    return self.steps[-1][-1].predict_survival_function(Xt, **kwargs)
+
+
+def patch_pipeline():
+    Pipeline.predict_survival_function = predict_survival_function
+    Pipeline.predict_cumulative_hazard_function = predict_cumulative_hazard_function
+
+    
+patch_pipeline()
