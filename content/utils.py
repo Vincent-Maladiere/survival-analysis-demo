@@ -224,9 +224,18 @@ def predict_survival_function(self, X, **kwargs):
     return self.steps[-1][-1].predict_survival_function(Xt, **kwargs)
 
 
+@available_if(_final_estimator_has("predict_cumulative_incidence"))
+def predict_cumulative_incidence(self, X, **kwargs):
+    Xt = X
+    for _, _, transformer in self._iter(with_final=False):
+        Xt = transformer.transform(Xt)
+    return self.steps[-1][-1].predict_cumulative_incidence(Xt, **kwargs)
+
+
 def patch_pipeline():
     Pipeline.predict_survival_function = predict_survival_function
     Pipeline.predict_cumulative_hazard_function = predict_cumulative_hazard_function
+    Pipeline.predict_cumulative_incidence = predict_cumulative_incidence
 
     
 patch_pipeline()
