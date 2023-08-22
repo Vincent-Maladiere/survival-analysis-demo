@@ -1,28 +1,28 @@
 # Core modules (mandatory)
-jupyterlite-core==0.1.0
-jupyterlab~=3.5.1
+jupyterlite-core
+jupyterlab
 
 # Python kernel (optional)
-jupyterlite-pyodide-kernel==0.0.6
+jupyterlite-pyodide-kernel
 
 # JavaScript kernel (optional)
-jupyterlite-javascript-kernel==0.1.0b21
+jupyterlite-javascript-kernel
 
 # Language support (optional)
 jupyterlab-language-pack-fr-FR
 jupyterlab-language-pack-zh-CN
 
 # SQLite kernel (optional)
-jupyterlite-xeus-sqlite==0.2.1
+jupyterlite-xeus-sqlite
 # P5 kernel (optional)
-jupyterlite-p5-kernel==0.1.0
+jupyterlite-p5-kernel
 # Lua kernel (optional)
-jupyterlite-xeus-lua==0.3.1
+jupyterlite-xeus-lua
 
 # JupyterLab: Fasta file renderer (optional)
-jupyterlab-fasta>=3,<4
+jupyterlab-fasta
 # JupyterLab: Geojson file renderer (optional)
-jupyterlab-geojson>=3,<4
+jupyterlab-geojson
 # JupyterLab: guided tour (optional)
 jupyterlab-tour
 # JupyterLab: dark theme
@@ -31,18 +31,18 @@ jupyterlab-night
 jupyterlab_miami_nights
 
 # Python: ipywidget library for Jupyter notebooks (optional)
-ipywidgets>=8.0.0,<9
+ipywidgets
 # Python: ipyevents library for Jupyter notebooks (optional)
-ipyevents>=2.0.1
+ipyevents
 # Python: interative Matplotlib library for Jupyter notebooks (optional)
-ipympl>=0.8.2
+ipympl
 # Python: ipycanvas library for Jupyter notebooks (optional)
-ipycanvas>=0.9.1
+ipycanvas
 # Python: ipyleaflet library for Jupyter notebooks (optional)
 ipyleaflet
 
 # Python: plotting libraries (optional)
-plotly>=5,<6
+plotly
 bqplot
 
 # Custom
