@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 from matplotlib import pyplot as plt
 
-from lifelines.metrics import concordance_index
+from lifelines.utils import concordance_index
 from sklearn.utils.validation import check_is_fitted
 from sklearn.base import BaseEstimator
 from sklearn.pipeline import Pipeline, _final_estimator_has
